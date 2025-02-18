@@ -58,11 +58,11 @@ pub const Backoff = union(enum) {
     fixed_delay: void,
     exponential_delay: f64,
 
-    fn fixed() @This() {
+    pub fn fixed() @This() {
         return .{ .fixed_delay = {} };
     }
 
-    fn exponential(exponent: f64) @This() {
+    pub fn exponential(exponent: f64) @This() {
         return .{ .exponential_delay = exponent };
     }
 
