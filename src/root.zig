@@ -74,7 +74,7 @@ pub const Backoff = union(enum) {
         policy: Policy,
         backoff: Backoff,
         current: f64 = 1,
-        fn next(self: *@This()) ?usize {
+        pub fn next(self: *@This()) ?usize {
             if ((self.policy.max_retries orelse 1) > 0) {
                 const factor: f64 = switch (self.backoff) {
                     .fixed_delay => self.current,
