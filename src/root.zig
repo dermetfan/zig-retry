@@ -139,7 +139,7 @@ pub const Policy = struct {
     }
 
     /// Conventice for common configuration. Returns a new Policy with defaults with an exponential delay
-    fn exponential(delay: usize, exponent: f64) @This() {
+    pub fn exponential(delay: usize, exponent: f64) @This() {
         return .{
             .backoff = Backoff.exponential(exponent),
             .delay = delay,
