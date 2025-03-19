@@ -58,11 +58,11 @@ pub const Backoff = union(enum) {
     fixed_delay,
     exponential_delay: f64,
 
-    fn fixed() @This() {
+    pub fn fixed() @This() {
         return .fixed_delay;
     }
 
-    fn exponential(exponent: f64) @This() {
+    pub fn exponential(exponent: f64) @This() {
         return .{ .exponential_delay = exponent };
     }
 
@@ -74,7 +74,7 @@ pub const Backoff = union(enum) {
         policy: Policy,
         backoff: Backoff,
         current: f64 = 1,
-        fn next(self: *@This()) ?usize {
+        pub fn next(self: *@This()) ?usize {
             if ((self.policy.max_retries orelse 1) > 0) {
                 const factor: f64 = switch (self.backoff) {
                     .fixed_delay => self.current,
@@ -139,7 +139,7 @@ pub const Policy = struct {
     }
 
     /// Conventice for common configuration. Returns a new Policy with defaults with an exponential delay
-    fn exponential(delay: usize, exponent: f64) @This() {
+    pub fn exponential(delay: usize, exponent: f64) @This() {
         return .{
             .backoff = Backoff.exponential(exponent),
             .delay = delay,
