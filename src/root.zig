@@ -7,7 +7,7 @@ var Rand = std.Random.DefaultPrng.init(0);
 /// of a result
 pub fn Condition(comptime T: type) type {
     return union(enum) {
-        on_err: void,
+        on_err,
         func_ptr: *const fn (T) bool,
 
         /// Retries on any error of an error union result
@@ -18,7 +18,7 @@ pub fn Condition(comptime T: type) type {
                     "onErr conditions assume ErrorUnion return types. Provided with a " ++ @typeName(T) ++ " type instead",
                 ),
             }
-            return .{ .on_err = {} };
+            return .on_err;
         }
 
         /// Retries depending on the result of a user defined func
@@ -55,11 +55,11 @@ test Condition {
 
 /// Types of backoffs, a sequence of delays between operation invocations
 pub const Backoff = union(enum) {
-    fixed_delay: void,
+    fixed_delay,
     exponential_delay: f64,
 
     fn fixed() @This() {
-        return .{ .fixed_delay = {} };
+        return .fixed_delay;
     }
 
     fn exponential(exponent: f64) @This() {
